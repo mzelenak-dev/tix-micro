@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-import type { Request, Response } from 'express'; // ✅ Type-only import
+import type { Request, Response } from 'express'; // type-only import
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,10 +14,13 @@ type CurrentUserResponse = {
 app.get(
   '/api/users/currentuser',
   (req: Request, res: Response<CurrentUserResponse>) => {
-    res.send({ id: '123', email: 'user@example.com' });
+    res.send({ id: '16690872', email: 'user@example.com' });
   }
 );
 
-app.listen(3000, () => {
-  console.log('AUTH ON 3000');
+const PORT = 3000;
+app.listen(PORT, () => {
+  const timestamp = new Date().toISOString();
+  console.log(`AUTH ON ${PORT} bindaho`);
+  console.log(`Express app started on port ${PORT} at ${timestamp}`);
 });
