@@ -1,7 +1,5 @@
 const PORT = 3000;
-import express/*, { Request, Response }*/ from 'express';
-import bodyParser from 'body-parser';
-
+import express from 'express';
 import { SignInRouter } from './routes/signin';
 import { SignUpRouter } from './routes/signup';
 import { SignOutRouter } from './routes/signout';
@@ -9,15 +7,14 @@ import { CurrentUserRouter } from './routes/current-user';
 
 const app = express();
 
-app.use(
-  SignInRouter,
-  SignUpRouter,
-  SignOutRouter,
-  CurrentUserRouter,
-  bodyParser.json(),
-);
+app.use(express.json());
+app.use(SignInRouter);
+app.use(SignUpRouter);
+app.use(SignOutRouter);
+app.use(CurrentUserRouter);
 
 app.listen(PORT, () => {
+  const now = new Date();
   console.log(`AUTH ON ${PORT} bindaho`);
-  console.log(`Express app started on port ${PORT} at ${new Date().toLocaleDateString()}`);
+  console.log(`Express app started on port ${PORT} at ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
 });
