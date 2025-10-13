@@ -8,15 +8,30 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log('something went wrong', error);
+  console.error('Something went wrong:', error);
+
   if (error instanceof RequestValidationError) {
-    console.log('this is a req validation error');
-  }
-  if (error instanceof DatabaseConnectionError) {
-    console.log('this is a database connection error');
+    console.log('This is a request validation error');
+
+    const formattedErrors = error.errors
+      .filter((err) => err.type === 'field')
+      .map((err) => ({
+        message: err.msg,
+        field: err.path,
+      }));
+
+    return res.status(400).send({ errors: formattedErrors });
   }
 
-  res.status(400).send({
-    message: 'Something went wrong'
-  });
+  if (error instanceof DatabaseConnectionError) {
+    console.log('This is a database connection error');
+    return res.status(500).send({ message: 'Database connection error' });
+  }
+
+  // fallback for unknown errors
+  if (error instanceof Error) {
+    return res.status(400).send({ message: error.message });
+  }
+
+  res.status(400).send({ message: 'Something went wrong' });
 };

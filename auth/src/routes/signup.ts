@@ -25,8 +25,8 @@ router.post(
 
     const { email, password } = req.body;
 
-    res.send(`Hello from signUp POST handler!\nEmail: ${email}\nPassword: ${password}`);
     throw new DatabaseConnectionError();
+    // res.send(`Hello from signUp POST handler!\nEmail: ${email}\nPassword: ${password}`);
   }
 );
 
