@@ -1,12 +1,10 @@
-const express = require('express');
-
-import type { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 
 const router = express.Router();
 
 router.post(
   '/api/users/signin',
-  (req: Request, res: Response<String>) => {
+  (req: Request, res: Response) => {
     res.send('Hello from signIn POST handler!');
   }
 );

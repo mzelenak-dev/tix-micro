@@ -1,6 +1,6 @@
 const PORT = 3000;
-const express = require('express');
-const bodyParser = require('body-parser');
+import express/*, { Request, Response }*/ from 'express';
+import bodyParser from 'body-parser';
 
 import { SignInRouter } from './routes/signin';
 import { SignUpRouter } from './routes/signup';
