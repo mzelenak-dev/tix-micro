@@ -1,4 +1,5 @@
 import express from 'express';
+import 'express-async-errors';
 import { SignInRouter } from './routes/signin';
 import { SignUpRouter } from './routes/signup';
 import { SignOutRouter } from './routes/signout';
@@ -19,6 +20,5 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   const now = new Date();
-  console.log(`AUTH ON ${PORT} bindaho`);
-  console.log(`Express app started on port ${PORT} at ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
+  console.log(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}: AUTH SERVICE RUNNING ON PORT ${PORT}`);
 });

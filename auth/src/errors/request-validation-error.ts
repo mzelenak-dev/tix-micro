@@ -1,4 +1,4 @@
-import { ValidationError } from 'express-validator';
+import { ValidationError, FieldValidationError } from 'express-validator';
 
 export class RequestValidationError extends Error {
   public statusCode = 400;
@@ -13,9 +13,11 @@ export class RequestValidationError extends Error {
   }
 
   serializeErrors() {
-    return this.errors.map(err => ({
+    return this.errors
+    .filter((err): err is FieldValidationError => err.type === 'field')
+    .map(err => ({
       message: err.msg,
-      // field: err.param,
+      field: err.path,
     }));
   }
 }
