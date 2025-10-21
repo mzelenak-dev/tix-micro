@@ -1,5 +1,5 @@
-import express from 'express';
 import 'express-async-errors';
+import express from 'express';
 import { SignInRouter } from './routes/signin';
 import { SignUpRouter } from './routes/signup';
 import { SignOutRouter } from './routes/signout';

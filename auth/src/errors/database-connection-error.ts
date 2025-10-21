@@ -1,11 +1,16 @@
-export class DatabaseConnectionError extends Error {
-  public reason: string;
+import { CustomError } from "./custom-error";
+
+export class DatabaseConnectionError extends CustomError {
+  statusCode = 360;
+  reason = 'DATABASECONNECTIONERROR_HANDLER: error connecting to database';
 
   constructor() {
-    super('Error connecting to database');
-    this.reason = 'Error connecting to database';
+    super('DATABASECONNECTIONERROR_HANDLER: error connecting to database');
 
-    // Fix prototype chain for TypeScript
     Object.setPrototypeOf(this, DatabaseConnectionError.prototype);
+  }
+
+  serializeErrors() {
+    return [{ message: this.reason }];
   }
 }
