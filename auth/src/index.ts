@@ -18,7 +18,7 @@ app.use(SignOutRouter);
 app.use(CurrentUserRouter);
 
 // catch-all for anything not defined
-app.all('*', () => {
+app.all('*', async () => {
   throw new NotFoundError();
 });
 
