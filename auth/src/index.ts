@@ -1,5 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
+import mongoose from 'mongoose';
+
 import { SignInRouter } from './routes/signin';
 import { SignUpRouter } from './routes/signup';
 import { SignOutRouter } from './routes/signout';
@@ -24,7 +26,20 @@ app.all('*', async () => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  const now = new Date();
-  console.log(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}: AUTH SERVICE RUNNING ON PORT ${PORT}`);
-});
+const start = async () => {
+  // connect string from ./infra/k8s/auth-mongo-depl.yaml service definition metadata.name & port
+  // db name ("auth") after port means mongoose will create db at service start
+  try {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
+    console.log('Connected to DB');
+  } catch(error) {
+    console.error(error);
+  }
+
+  app.listen(PORT, () => {
+    const now = new Date();
+    console.log(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}: AUTH SERVICE RUNNING ON PORT ${PORT}`);
+  });
+};
+
+start();
