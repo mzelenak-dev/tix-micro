@@ -7,10 +7,18 @@ interface UserAttrs {
   password: string;
 }
 
-interface UserModel extends mongoose.Model<any> {
-  build(attrs: UserAttrs): any;
+// the template model for the User
+interface UserModel extends mongoose.Model<UserDoc> {
+  build(attrs: UserAttrs): UserDoc;
 }
 
+// the instance of a User model == UserDoc
+interface UserDoc extends mongoose.Document {
+  email: string;
+  password: string;
+}
+
+// mongo specific data schema for User
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -26,11 +34,13 @@ userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 }
 
-const User = mongoose.model<any, UserModel>('User', userSchema);
+const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
-// User.build({
+// const user = User.build({
 //   email: 'a@b.com',
 //   password: '1829sis8'
 // });
+
+// console.log(user, user.email, user.password);
 
 export { User };
